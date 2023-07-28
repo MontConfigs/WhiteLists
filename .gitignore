@@ -1,41 +1,23 @@
-# Compiled Lua sources
-luac.out
+local allowed_hwids = {
+    "79B73178-9876-477A-94B1-E322C46940D4", --me
+    "B0EA34E8-BF19-4E63-A1C0-73AF61D9ECCD", --Ky
+    "7BD82BFB-09C0-4596-B0E3-2E4C6E1B4209", --Ommi
+    "", --
+    "", --
+    "", --
+    "", --
+}
 
-# luarocks build files
-*.src.rock
-*.zip
-*.tar.gz
+local player_hwid = game:GetService("RbxAnalyticsService"):GetClientId()
 
-# Object files
-*.o
-*.os
-*.ko
-*.obj
-*.elf
+local is_hwid_allowed = false
+for i, v in pairs(allowed_hwids) do
+    if v == player_hwid then
+        is_hwid_allowed = true
+        break
+    end
+end
 
-# Precompiled Headers
-*.gch
-*.pch
-
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
-*.def
-*.exp
-
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
-
+if not is_hwid_allowed then
+    game.Players.LocalPlayer:Kick("Kicked Not WhiteListed")
+end
